@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "author": "Anonymous maker",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-breadboard-half", "id": "bb1", "top": -99, "left": 108.4, "attrs": {} },
+    { "type": "board-esp32-s2-devkitm-1", "id": "esp", "top": -119.51, "left": 4.57, "attrs": {} },
+    { "type": "board-mfrc522", "id": "rfid1", "top": -290.65, "left": -15.76, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -80.4,
+      "left": 138.2,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -80.4,
+      "left": 368.6,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": -24.85,
+      "left": 278.4,
+      "attrs": { "value": "165" }
+    },
+    { "type": "wokwi-relay-module", "id": "relay1", "top": -172.6, "left": 432, "attrs": {} },
+    { "type": "wokwi-ks2e-m-dc5", "id": "relay2", "top": 138.9, "left": 157.7, "attrs": {} },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": -24.85,
+      "left": 172.8,
+      "attrs": { "value": "165" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "bb1:3t.c", "bb1:2t.c", "black", [ "v0" ] ],
+    [ "bb1:2t.b", "bb1:tn.1", "black", [ "v0" ] ],
+    [ "rfid1:3.3V", "esp:3V3", "green", [ "h0", "v57.6" ] ],
+    [ "esp:GND.1", "rfid1:GND", "black", [ "h-38.4", "v-268.8" ] ],
+    [ "rfid1:SCK", "esp:6", "orange", [ "h-38.4", "v211.2" ] ],
+    [ "rfid1:SDA", "esp:7", "gold", [ "h-48", "v230.4" ] ],
+    [ "rfid1:MOSI", "esp:8", "cyan", [ "h-28.8", "v230.4" ] ],
+    [ "rfid1:MISO", "esp:9", "purple", [ "h-9.6", "v220.8" ] ],
+    [ "rfid1:RST", "esp:10", "green", [ "h-67.2", "v9.6" ] ],
+    [ "esp:33", "bb1:16t.e", "green", [ "h0" ] ],
+    [ "bb1:23t.d", "bb1:28t.d", "green", [ "v0" ] ],
+    [ "bb1:27t.c", "bb1:24t.c", "black", [ "v0" ] ],
+    [ "bb1:tn.20", "bb1:24t.b", "black", [ "v0" ] ],
+    [ "esp:34", "bb1:11t.e", "violet", [ "h0" ] ],
+    [ "bb1:5t.c", "bb1:4t.c", "violet", [ "v0" ] ],
+    [ "led1:A", "bb1:4t.b", "", [ "$bb" ] ],
+    [ "led1:C", "bb1:3t.b", "", [ "$bb" ] ],
+    [ "r1:1", "bb1:16t.d", "", [ "$bb" ] ],
+    [ "r1:2", "bb1:22t.d", "", [ "$bb" ] ],
+    [ "led2:A", "bb1:28t.b", "", [ "$bb" ] ],
+    [ "led2:C", "bb1:27t.b", "", [ "$bb" ] ],
+    [ "r2:1", "bb1:5t.d", "", [ "$bb" ] ],
+    [ "r2:2", "bb1:11t.d", "", [ "$bb" ] ],
+    [ "esp:GND.2", "bb1:tn.25", "black", [ "h0" ] ]
+  ],
+  "dependencies": {}
+}

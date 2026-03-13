@@ -17,9 +17,9 @@ const curriculum = [
     topics: [
       { name: "Arduino IDE setup + uploading sketches", done: true },
       { name: "pinMode, digitalWrite, digitalRead", done: true },
-      { name: "Blink an LED (the hello world of circuits)", done: false },
+      { name: "Blink an LED (the hello world of circuits)", done: true },
       { name: "Button input with pull-up/pull-down resistors", done: false },
-      { name: "Serial.begin() / Serial.println() — your first 'log'", done: false },
+      { name: "Serial.begin() / Serial.println() — your first 'log'", done: true },
     ],
     project_step: "TinkerCAD: Build LED + button circuit. Button press logs 'ACCESS ATTEMPT' to Serial.",
     resources: ["Arduino official tutorials", "TinkerCAD Circuits (free, browser-based)"]
@@ -29,8 +29,8 @@ const curriculum = [
     title: "SPI Communication & the RC522 RFID Module",
     color: "#00cfff",
     topics: [
-      { name: "What is SPI? (MOSI, MISO, SCK, SS pins)", done: false },
-      { name: "How RFID works — EM fields, passive tags, UIDs", done: false },
+      { name: "What is SPI? (MOSI, MISO, SCK, SS pins)", done: true },
+      { name: "How RFID works — EM fields, passive tags, UIDs", done: true },
       { name: "Install MFRC522 library in Arduino IDE", done: false },
       { name: "Read a card UID and print it to Serial", done: false },
       { name: "Store an allowed UID array in your sketch", done: false },
