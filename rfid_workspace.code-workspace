@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "Firmware",
+			"name": "Firmware (ESP32)"
+		},
+		{
+			"path": "Hardware",
+			"name": "Hardware Docs"
+		},
+		{
+			"path": "Study",
+			"name": "Study Notes"
+		}
+	],
+	"settings": {
+		"platformio-ide.autoOpen": true,
+		"[cpp]": {
+			"editor.defaultFormatter": "clangd"
+		}
+	}
+}

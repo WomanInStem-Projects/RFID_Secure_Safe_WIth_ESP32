@@ -1,0 +1,18 @@
+# PlatformIO
+.pio/
+.vscode/.c_cpp_properties.json
+.vscode/extensions.json
+build/
+dist/
+
+# Build artifacts
+*.o
+*.a
+*.so
+*.elf
+
+# IDE
+.DS_Store
+.idea/
+*.swp
+*.swo

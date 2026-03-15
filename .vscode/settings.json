@@ -1,0 +1,13 @@
+{
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "[cpp]": {
+        "editor.defaultFormatter": "clangd"
+    },
+    "platformio-ide.autoOpen": true,
+    "platformio-ide.autoBuildOnSave": false,
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
+    "files.exclude": {
+        "**/.pio": true
+    }
+}
