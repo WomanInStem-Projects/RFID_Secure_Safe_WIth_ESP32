@@ -17,6 +17,7 @@ const int greenled = 21;
 
 String pswd ;
 String guessed = "";
+String cardID = "";
 bool pswdset = false;
 
 const int sda = 13;
@@ -27,6 +28,9 @@ const int miso = 19;  // ESP32 default SPI MISO
 const int mosi = 23;  // ESP32 default SPI MOSI
 const int ss = 5;     // ESP32 default SPI CS
 const int rst = 4;   // RFID reset pin
+bool cardpresent = false;
+
+String ACL[]; // access controll list contsining each UI for RFID tag/card
 
 MFRC522 rfid(ss, rst);
 Adafruit_SSD1306 oled(128, 64, &Wire, -1);
@@ -34,6 +38,121 @@ Adafruit_SSD1306 oled(128, 64, &Wire, -1);
 void clearDisplay() {
   oled.clearDisplay();
   oled.setCursor(0, 0);  // Reset cursor to top-left
+}
+
+void addCardtoACL(String cardID) {
+  //ACL[sizeof(ACL) / sizeof(ACL[0])] = cardID; // Add card ID to ACL
+}
+
+void lookinforcard() //loops untill a card is found, if card is found prints to serial
+{
+  while (true){
+    if ( rfid.PICC_IsNewCardPresent()) // loop ag
+    {
+      break; //card is close by so break out of loop
+
+    } 
+    displayAndSerial("No Card Detected - Please Tap Your Card");
+    delay(1000);
+  
+
+    if ( ! rfid.PICC_ReadCardSerial())  // if there is a tag present but cant read it, loop again
+    {
+      displayAndSerial("Card Exists but Cannot get UID");
+    } else { // get card UID
+      for (byte i = 0; i < rfid.uid.size; i++) {
+        cardID += String(rfid.uid.uidByte[i], HEX);
+      }
+      cardID.toUpperCase();
+      displayAndSerial("Card Detected with UID: " + cardID);
+
+      Serial.println();
+
+      rfid.PICC_HaltA(); // this closed the reader's connection to the card, so we can read another card after this
+      //rfid.PCD_StopCrypto1(); // stop encryption on PCD, i dont think its encrypted fr
+    }
+  }
+
+}
+
+void AccessControl() {
+  lookinforcard();
+  // if card is in ACL, grant access, else deny access
+  displayAndSerial("Would you like to add this card to the Access Control List? (y/n)");
+  while (Serial.available() == 0) {}
+  waitForSerial();
+  String response = Serial.readStringUntil('\n');
+  response.trim();
+
+  // checks user response
+  // if yes prompts for admin password
+  // if no returns to main loop and waits for another card!!
+  switch (response.c_str()[0]) { 
+    // User wants to add card to ACL
+    case 'y':
+    case 'Y':
+      if (IsAdmin()) {
+        displayAndSerial("Adding Card to ACL");
+        delay(1000);
+        addCardtoACL(cardID);
+        delay(1000);
+        displayAndSerial("Card Added to ACL");
+      break;
+      } else {
+        displayAndSerial("Admin Access Denied - Cannot Add Card to ACL");
+        return;
+      }
+    // User doesnt want to add card to ACL
+    case 'n':
+    case 'N':
+      displayAndSerial("Card Not Added to ACL");
+      break;
+    default:
+      displayAndSerial("Invalid Response - Card Not Added to ACL");
+  }
+}
+
+// ask usrer for admin password to allow them to set UID
+// always returns true for now because they have unlimited attempts (attack vector) , fix later
+boolean IsAdmin() 
+{
+  boolean isAdmin;
+
+  displayAndSerial("Enter Admin password:");
+  while (Serial.available() == 0) {}
+  waitForSerial();
+  guessed = Serial.readStringUntil('\n');
+  guessed.trim();
+  displayAndSerial("You Entered: " + guessed);
+  delay(2000); //give em time to read display
+
+  while (guessed != pswd) {
+    isAdmin = false;
+    blinkled(redled);
+    displayAndSerial("Access Denied - Try Again");
+    delay(1000);
+    
+    displayAndSerial("Enter Admin password:");
+    
+    while (Serial.available() == 0) {}
+    delay(500);
+    
+    guessed = Serial.readStringUntil('\n');
+    guessed.trim();
+    displayAndSerial("You Entered: " + guessed);
+
+  }
+  
+  displayAndSerial("Access Granted. ");
+  isAdmin = true;
+  delay(1000);
+  digitalWrite(redled, LOW);
+  blinkled(greenled);
+  digitalWrite(greenled, HIGH);
+  
+  guessed = "";  // Reset for next round
+  delay(3000);
+  digitalWrite(greenled, LOW);
 }
 
 void blinkled(int pin) {
@@ -96,7 +215,7 @@ void setup() {
 
 void loop() {
   
-
+  // sets admin password once at the start
   if (pswdset == false) {
     delay(100);
     digitalWrite(redled, HIGH);
@@ -120,43 +239,8 @@ void loop() {
     delay(1000);
     
   }
-  displayAndSerial("Welcome, please enter your password:");
-  while (Serial.available() == 0) {}
-  waitForSerial();
-  guessed = Serial.readStringUntil('\n');
-  guessed.trim();
-  displayAndSerial("You Entered: " + guessed);
-  delay(2000); //give em time to read display
 
-  while (guessed != pswd) {
-    blinkled(redled);
-    displayAndSerial("Access Denied - Try Again");
-    delay(1000);
-    
-    displayAndSerial("Welcome, please enter your password:");
-    
-    while (Serial.available() == 0) {}
-    delay(500);
-    
-    guessed = Serial.readStringUntil('\n');
-    guessed.trim();
-  }
+  AccessControl();
+
   
-  displayAndSerial("Access Granted. Welcome!");
-  delay(1000);
-  digitalWrite(redled, LOW);
-  //digitalWrite(greenled, HIGH);
-  blinkled(greenled);
-  digitalWrite(greenled, HIGH);
-  
-  // pswd = "";
-  guessed = "";  // Reset for next round
-  delay(3000);
-  digitalWrite(greenled, LOW);
-  
-  // displayAndSerial("Enter binary password:");
-  // while (Serial.available() == 0) {}
-  // delay(500);
-  // guessed = Serial.readStringUntil('\n');
-  // guessed.trim();
 }
