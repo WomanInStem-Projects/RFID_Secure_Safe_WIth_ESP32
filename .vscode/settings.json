@@ -9,5 +9,6 @@
     "C_Cpp.intelliSenseEngine": "Tag Parser",
     "files.exclude": {
         "**/.pio": true
-    }
+    },
+    "cmake.ignoreCMakeListsMissing": true
 }
