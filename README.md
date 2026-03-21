@@ -11,7 +11,7 @@ This is an active prototype. The core firmware flow is implemented and running, 
 - ESP32 + MFRC522 RFID reader integration
 - SSD1306 OLED status messages
 - Red/green LED feedback for deny/grant states
-- Buzzer for for audio signaling
+- Buzzer for audio signaling
 - First-run admin password setup over Serial
 - In-memory Access Control List (ACL) of RFID UIDs
 - Unknown card enrollment flow gated by admin password
