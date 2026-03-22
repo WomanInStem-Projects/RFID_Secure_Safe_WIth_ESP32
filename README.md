@@ -4,7 +4,7 @@ RFID-based access-control prototype built on an ESP32. The project combines embe
 
 ## Current Status
 
-This is an active prototype. The core firmware flow is implemented and running, but several security-hardening features are still planned
+This is an active prototype. The core firmware flow is implemented and running, but several additional features are planned (detialed at the bottom).
 
 ## What Is Implemented
 
@@ -57,7 +57,8 @@ This is an active prototype. The core firmware flow is implemented and running, 
 
 ## Build and Run (PlatformIO)
 
-From the repository root:
+If usuing VsCode extenion simply click the run button:
+Otherwise from the repository root:
 
 ```bash
 cd Firware
@@ -69,13 +70,15 @@ pio device monitor -b 9600
 
 ## Wokwi Simulation
 
+This Wokwi simulation is not always an accurate representation of current workings, but gives a generall idea of how the project is being implimented.
+
 - Project link: https://wokwi.com/projects/458415152295436289
 
 ## Repository Layout
 
 - `Firware/`: firmware project, PlatformIO config, local library sources, simulation files
 - `Hardware/`: schematic and wiring references
-- `Study/`: exploratory code, notes, and supporting experiments
+- `Study/`: exploratory code, notes that aided in my comprehention, and supporting experiments
 - `Vulnerability_research/`: security analysis and attack-surface research materials
 
 
@@ -83,6 +86,7 @@ pio device monitor -b 9600
 
 - Impliment a keypad or phyiscall input instead of relying on serial
 - Impliment a buzzer and solinoid motor for audio and door unlocking
-- Allow the buzzer, oled siplay, and leds to run concurrently (possibly as a state machine)
-- 3D design and print safe that will impliment this circuit
-- Create a PCB, purchase all part and solder together
+- Allow the buzzer, oled display, leds, and reading of cards to run concurrently 
+- Impliment code as a state machine and allow for remote access
+- 3D design and print enclosure that would bring circuit alive
+- Create a PCB, purchase all parts and solder together
