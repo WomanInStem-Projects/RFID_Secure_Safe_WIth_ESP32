@@ -6,6 +6,13 @@ RFID-based access-control prototype built on an ESP32. The project combines embe
 
 This is an active prototype. The core firmware flow is implemented and running, but several additional features are planned (detialed at the bottom).
 
+## Repository Layout
+
+- `Firware/`: firmware project, PlatformIO config, local library sources, simulation files
+- `Hardware/`: schematic and wiring references
+- `Study/`: exploratory code, notes that aided in my comprehention, and supporting documents (datasheets)
+- `Vulnerability_research/`: security analysis and attack-surface research materials
+
 ## What Is Implemented
 
 - ESP32 + MFRC522 RFID reader integration
@@ -57,7 +64,7 @@ This is an active prototype. The core firmware flow is implemented and running, 
 
 ## Build and Run (PlatformIO)
 
-If usuing VsCode extenion simply click the run button:
+If using VsCode extension simply click the run button:
 Otherwise from the repository root:
 
 ```bash
@@ -73,13 +80,6 @@ pio device monitor -b 9600
 This Wokwi simulation is not always an accurate representation of current workings, but gives a generall idea of how the project is being implimented.
 
 - Project link: https://wokwi.com/projects/458415152295436289
-
-## Repository Layout
-
-- `Firware/`: firmware project, PlatformIO config, local library sources, simulation files
-- `Hardware/`: schematic and wiring references
-- `Study/`: exploratory code, notes that aided in my comprehention, and supporting experiments
-- `Vulnerability_research/`: security analysis and attack-surface research materials
 
 
 ## Planned Next Steps
